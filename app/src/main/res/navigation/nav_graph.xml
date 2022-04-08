@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.flash.ui.main.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_signUpFrag"
+            app:destination="@id/signUpFrag" />
+        <action
+            android:id="@+id/action_mainFragment_to_signInFrag"
+            app:destination="@id/signInFrag" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFrag"
+        android:name="com.example.flash.ui.auth.SignUpFrag"
+        android:label="fragment_signup"
+        tools:layout="@layout/fragment_signup" />
+    <fragment
+        android:id="@+id/signInFrag"
+        android:name="com.example.flash.ui.auth.SignInFrag"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
+</navigation>

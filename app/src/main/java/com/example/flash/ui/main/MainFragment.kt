@@ -6,10 +6,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.viewbinding.ViewBindings
 import com.example.flash.R
+import com.example.flash.databinding.MainFragmentBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -19,47 +25,26 @@ class MainFragment : Fragment() {
 
     companion object {
         fun newInstance() = MainFragment()
-        private val mAuth: FirebaseAuth = FirebaseAuth.getInstance();
     }
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var binding : MainFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        binding = DataBindingUtil.inflate(layoutInflater,R.layout.main_fragment,container,false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
-        val email = "321akhilbabu@gmail.com"
-        val pass = "hellotesting"
-        mAuth.createUserWithEmailAndPassword(email, pass)
-            .addOnCompleteListener(requireActivity(),
-                OnCompleteListener<AuthResult?> { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d("tag", "createUserWithEmail:success")
-                        val user = mAuth.currentUser
-
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.d("tag", "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(
-                            context, "Authentication failed.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                    }
-
-                    // ...
-                })
-
+        binding.signupTv.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_signUpFrag)
+        }
+        binding.signInTv.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_signInFrag)
+        }
     }
 
-    override fun onStart() {
-        super.onStart()
-        val currentUser = mAuth.currentUser
-    }
 }
